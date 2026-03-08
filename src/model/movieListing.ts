@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 import { genreSchema, IGenre } from "./genre.js";
 
-export interface IMovieListing {
+export interface IMovieListing extends Document{
   title: string;
   genre: IGenre;
   numberInStock: number;

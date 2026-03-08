@@ -21,7 +21,13 @@ router.post(
   validation(GenreJoiSchema),
   postGenre,
 );
-router.put("/:id", authenticatedUser(), isAdmin(), putGenre);
+router.put(
+  "/:id",
+  authenticatedUser(),
+  isAdmin(),
+  validation(GenreJoiSchema),
+  putGenre,
+);
 router.delete("/:id", authenticatedUser(), isAdmin(), deleteGenre);
 
 export default router;

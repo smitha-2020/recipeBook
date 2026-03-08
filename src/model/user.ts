@@ -5,7 +5,7 @@ import config from "config";
 
 const { Schema } = mongoose;
 
-export interface IUser {
+export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
@@ -39,8 +39,8 @@ const userSchema = new Schema<IUser, Model<IUser>, IUserMethods>({
   isAdmin: { type: Boolean, default: false },
 });
 
-userSchema.method("jwtCreation", async function () {
-  return await jwt.sign(
+userSchema.method("jwtCreation", function () {
+  return jwt.sign(
     { id: this._id, isAdmin: this.isAdmin },
     config.get("privateKey"),
   );

@@ -5,7 +5,7 @@ interface CustomerFn {
   default: () => boolean;
 }
 
-export interface ICustomer {
+export interface ICustomer extends Document {
   name: string;
   paid: boolean;
   isGold: boolean;

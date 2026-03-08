@@ -10,7 +10,7 @@ export interface IGenreSchema extends Document {
   name: string;
 }
 
-export const genreSchema = new Schema({
+export const genreSchema = new Schema<IGenreSchema>({
   name: { type: String, required: true, minlength: 3, maxlength: 50 },
 });
 
