@@ -1,5 +1,5 @@
 {
-  "name": "movies",
+  "name": "recipeBook",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
@@ -7,8 +7,9 @@
   "type": "module",
   "main": "index.ts",
   "scripts": {
-    "start": "rm -rf ./dist && export moviesLibrary_privateKey=smitha@123 && export NODE_ENV=development &&  tsc && nodemon ./dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "rm -rf ./dist && export recipeBook_privateKey=smitha@123 && export NODE_ENV=development &&  tsc && nodemon ./dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:up": "migrate-mongo up"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -19,7 +20,8 @@
     "joi": "^18.0.2",
     "jsonwebtoken": "^9.0.3",
     "lodash": "^4.17.23",
-    "mongoose": "^9.2.1"
+    "mongoose": "^9.2.1",
+    "nodemon": "^3.1.14"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
@@ -27,6 +29,7 @@
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/lodash": "^4.17.24",
+    "migrate-mongo": "^14.0.7",
     "typescript": "^5.9.3"
   }
 }

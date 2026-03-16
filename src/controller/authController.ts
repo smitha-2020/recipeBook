@@ -20,7 +20,7 @@ export const authentication = async (req: Request, res: Response) => {
     );
 
     if (validUser) {
-      const token = await authenticatedUser.jwtCreation();
+      const token = authenticatedUser.jwtCreation();
       //need to store the token in the local store in future
       if (token) {
         return res.status(StatusCodes.OK).send(token);

@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: .
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    environment:
+      DB_URL: mongodb://db/recipeBook
+    volumes:
+      - ./:/app
+    command: ./docker-entrypoint.sh
+
+  db:
+    image: mongodb/mongodb-community-server:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - recipesList:/data/db
+
+volumes:
+  recipesList:
