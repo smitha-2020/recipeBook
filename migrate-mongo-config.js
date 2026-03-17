@@ -1,12 +1,13 @@
 // In this file you can configure migrate-mongo
+import appConfig from "config";
+
+const dbConfig = appConfig.get("dbConfig");
 
 const config = {
   mongodb: {
-    // TODO Change (or review) the url to your MongoDB:
-    url: process.env.DB_URL || `mongodb://localhost:27017/`,
+    url: process.env.DB_URL || `mongodb://${dbConfig.host}:${dbConfig.port}/`,
 
-    // TODO Change this to your database name:
-    databaseName: "recipeBook",
+    databaseName: process.env.DB_NAME || dbConfig.dbName,
 
     options: {
       // useNewUrlParser: true, // (not needed anymore in mongodb driver 4.x+)

@@ -7,10 +7,16 @@ export const up = async (db, client) => {
   // TODO write your migration here.
   // See https://github.com/seppevs/migrate-mongo/#creating-a-new-migration-script
   // Example:
+
+  const categories = await db.collection("category").find().toArray();
+  const categoryBySlug = Object.fromEntries(
+    categories.map((c) => [c.slug, c._id]),
+  );
+
   await db.collection("recipes").insertMany([
     {
       id: "m1",
-      categoryIds: ["c1", "c2"],
+      categoryIds: [categoryBySlug["c1"], categoryBySlug["c2"]],
       title: "Spaghetti with Tomato Sauce",
       slug: "spaghetti-with-tomato-sauce",
       affordability: "affordable",
@@ -43,7 +49,7 @@ export const up = async (db, client) => {
     },
     {
       id: "m2",
-      categoryIds: ["c2"],
+      categoryIds: [categoryBySlug["c2"]],
       title: "Toast Hawaii",
       slug: "toast-hawaii",
       affordability: "affordable",
@@ -71,7 +77,7 @@ export const up = async (db, client) => {
     },
     {
       id: "m3",
-      categoryIds: ["c3"],
+      categoryIds: [categoryBySlug["c3"]],
       title: "Classic Hamburger",
       slug: "classic-hamburger",
       affordability: "pricey",
@@ -102,7 +108,7 @@ export const up = async (db, client) => {
     },
     {
       id: "m4",
-      categoryIds: ["c4"],
+      categoryIds: [categoryBySlug["c4"]],
       title: "Wiener Schnitzel",
       slug: "wiener-schnitzel",
       affordability: "luxurious",
@@ -137,7 +143,11 @@ export const up = async (db, client) => {
     },
     {
       id: "m5",
-      categoryIds: ["c2", "c5", "c10"],
+      categoryIds: [
+        categoryBySlug["c2"],
+        categoryBySlug["c5"],
+        categoryBySlug["c10"],
+      ],
       title: "Salad with Smoked Salmon",
       slug: "salad-with-smoked-salmon",
       affordability: "luxurious",
@@ -171,7 +181,7 @@ export const up = async (db, client) => {
     },
     {
       id: "m6",
-      categoryIds: ["c6", "c10"],
+      categoryIds: [categoryBySlug["c6"], categoryBySlug["c10"]],
       title: "Delicious Orange Mousse",
       slug: "delicious-orange-mousse",
       affordability: "affordable",
@@ -206,7 +216,7 @@ export const up = async (db, client) => {
     },
     {
       id: "m7",
-      categoryIds: ["c7"],
+      categoryIds: [categoryBySlug["c7"]],
       title: "Pancakes",
       slug: "pancakes",
       affordability: "affordable",
@@ -237,7 +247,7 @@ export const up = async (db, client) => {
     },
     {
       id: "m8",
-      categoryIds: ["c8"],
+      categoryIds: [categoryBySlug["c8"]],
       title: "Creamy Indian Chicken Curry",
       slug: "creamy-indian-chicken-curry",
       affordability: "pricey",
@@ -270,7 +280,7 @@ export const up = async (db, client) => {
     },
     {
       id: "m9",
-      categoryIds: ["c9"],
+      categoryIds: [categoryBySlug["c9"]],
       title: "Chocolate Souffle",
       slug: "chocolate-souffle",
       affordability: "affordable",
@@ -319,7 +329,11 @@ export const up = async (db, client) => {
     },
     {
       id: "m10",
-      categoryIds: ["c2", "c5", "c10"],
+      categoryIds: [
+        categoryBySlug["c2"],
+        categoryBySlug["c5"],
+        categoryBySlug["c10"],
+      ],
       title: "Asparagus Salad with Cherry Tomatoes",
       slug: "asparagus-salad-with-cherry-tomatoes",
       affordability: "luxurious",

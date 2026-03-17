@@ -15,7 +15,7 @@ export enum IComplexity {
 }
 
 export interface IRecipeSchema extends Document {
-  categoryIds: string[];
+  categoryIds: mongoose.Schema.Types.ObjectId[];
   title: string;
   slug: string;
   affordability: IAffordability;
@@ -34,10 +34,11 @@ export interface IRecipeSchema extends Document {
 export const recipeSchema = new Schema<IRecipeSchema>(
   {
     categoryIds: {
-      type: [String],
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Category",
       required: true,
       validate: {
-        validator: (ids: string[]) => ids.length > 0,
+        validator: (ids: mongoose.Schema.Types.ObjectId[]) => ids.length > 0,
         message: "At least one category must be provided",
       },
     },
