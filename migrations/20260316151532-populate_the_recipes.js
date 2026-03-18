@@ -8,15 +8,20 @@ export const up = async (db, client) => {
   // See https://github.com/seppevs/migrate-mongo/#creating-a-new-migration-script
   // Example:
 
-  const categories = await db.collection("category").find().toArray();
+  const categories = await db.collection("categories").find().toArray();
   const categoryBySlug = Object.fromEntries(
     categories.map((c) => [c.slug, c._id]),
   );
 
+  const admin = await db
+    .collection("users")
+    .findOne({ isAdmin: true }, { projection: { _id: 1 } });
+  const createdById = admin?._id;
+
   await db.collection("recipes").insertMany([
     {
       id: "m1",
-      categoryIds: [categoryBySlug["c1"], categoryBySlug["c2"]],
+      category: [categoryBySlug["c1"], categoryBySlug["c2"]],
       title: "Spaghetti with Tomato Sauce",
       slug: "spaghetti-with-tomato-sauce",
       affordability: "affordable",
@@ -46,10 +51,11 @@ export const up = async (db, client) => {
       isVegetarian: true,
       isLactoseFree: false,
       isFav: false,
+      postedBy: createdById,
     },
     {
       id: "m2",
-      categoryIds: [categoryBySlug["c2"]],
+      category: [categoryBySlug["c2"]],
       title: "Toast Hawaii",
       slug: "toast-hawaii",
       affordability: "affordable",
@@ -74,10 +80,11 @@ export const up = async (db, client) => {
       isVegetarian: false,
       isLactoseFree: false,
       isFav: false,
+      postedBy: createdById,
     },
     {
       id: "m3",
-      categoryIds: [categoryBySlug["c3"]],
+      category: [categoryBySlug["c3"]],
       title: "Classic Hamburger",
       slug: "classic-hamburger",
       affordability: "pricey",
@@ -105,10 +112,11 @@ export const up = async (db, client) => {
       isVegetarian: false,
       isLactoseFree: true,
       isFav: false,
+      postedBy: createdById,
     },
     {
       id: "m4",
-      categoryIds: [categoryBySlug["c4"]],
+      category: [categoryBySlug["c4"]],
       title: "Wiener Schnitzel",
       slug: "wiener-schnitzel",
       affordability: "luxurious",
@@ -140,10 +148,11 @@ export const up = async (db, client) => {
       isVegetarian: false,
       isLactoseFree: false,
       isFav: false,
+      postedBy: createdById,
     },
     {
       id: "m5",
-      categoryIds: [
+      category: [
         categoryBySlug["c2"],
         categoryBySlug["c5"],
         categoryBySlug["c10"],
@@ -178,10 +187,11 @@ export const up = async (db, client) => {
       isVegetarian: false,
       isLactoseFree: true,
       isFav: false,
+      postedBy: createdById,
     },
     {
       id: "m6",
-      categoryIds: [categoryBySlug["c6"], categoryBySlug["c10"]],
+      category: [categoryBySlug["c6"], categoryBySlug["c10"]],
       title: "Delicious Orange Mousse",
       slug: "delicious-orange-mousse",
       affordability: "affordable",
@@ -213,10 +223,11 @@ export const up = async (db, client) => {
       isVegetarian: true,
       isLactoseFree: false,
       isFav: false,
+      postedBy: createdById,
     },
     {
       id: "m7",
-      categoryIds: [categoryBySlug["c7"]],
+      category: [categoryBySlug["c7"]],
       title: "Pancakes",
       slug: "pancakes",
       affordability: "affordable",
@@ -244,10 +255,11 @@ export const up = async (db, client) => {
       isVegetarian: true,
       isLactoseFree: false,
       isFav: false,
+      postedBy: createdById,
     },
     {
       id: "m8",
-      categoryIds: [categoryBySlug["c8"]],
+      category: [categoryBySlug["c8"]],
       title: "Creamy Indian Chicken Curry",
       slug: "creamy-indian-chicken-curry",
       affordability: "pricey",
@@ -277,10 +289,11 @@ export const up = async (db, client) => {
       isVegetarian: false,
       isLactoseFree: true,
       isFav: false,
+      postedBy: createdById,
     },
     {
       id: "m9",
-      categoryIds: [categoryBySlug["c9"]],
+      category: [categoryBySlug["c9"]],
       title: "Chocolate Souffle",
       slug: "chocolate-souffle",
       affordability: "affordable",
@@ -326,10 +339,11 @@ export const up = async (db, client) => {
       isVegetarian: true,
       isLactoseFree: false,
       isFav: false,
+      postedBy: createdById,
     },
     {
       id: "m10",
-      categoryIds: [
+      category: [
         categoryBySlug["c2"],
         categoryBySlug["c5"],
         categoryBySlug["c10"],
@@ -362,6 +376,7 @@ export const up = async (db, client) => {
       isVegetarian: true,
       isLactoseFree: true,
       isFav: false,
+      postedBy: createdById,
     },
   ]);
 };

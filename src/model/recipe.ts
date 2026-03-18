@@ -15,7 +15,7 @@ export enum IComplexity {
 }
 
 export interface IRecipeSchema extends Document {
-  categoryIds: mongoose.Schema.Types.ObjectId[];
+  category: mongoose.Schema.Types.ObjectId[];
   title: string;
   slug: string;
   affordability: IAffordability;
@@ -29,11 +29,12 @@ export interface IRecipeSchema extends Document {
   isVegetarian: boolean;
   isLactoseFree: boolean;
   isFav: boolean;
+  postedBy: mongoose.Schema.Types.ObjectId;
 }
 
 export const recipeSchema = new Schema<IRecipeSchema>(
   {
-    categoryIds: {
+    category: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "Category",
       required: true,
@@ -95,19 +96,11 @@ export const recipeSchema = new Schema<IRecipeSchema>(
     isLactoseFree: { type: Boolean, default: false },
     isFav: { type: Boolean, default: false },
 
-    //nutrition: {
-    //  calories: Number,
-    //  protein: Number,
-    //  fat: Number,
-    //  carbs: Number,
-    //},
-
-    //reviews: [reviewSchema],
-
-    //createdBy: {
-    //  type: Types.ObjectId,
-    //  ref: "User",
-    //},
+    postedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: "User",
+    },
   },
   { timestamps: true },
 );
@@ -115,7 +108,7 @@ export const recipeSchema = new Schema<IRecipeSchema>(
 export const Recipe = mongoose.model<IRecipeSchema>("Recipe", recipeSchema);
 
 export const RecipeJoiSchema = Joi.object({
-  categoryIds: Joi.array().items(Joi.string()).required().min(1),
+  category: Joi.array().items(Joi.string()).required().min(1),
   title: Joi.string().min(5).max(50),
   slug: Joi.string().min(15).max(25),
   affordability: Joi.string().valid(Object.values(IAffordability).join(",")),
@@ -129,4 +122,5 @@ export const RecipeJoiSchema = Joi.object({
   isVegetarian: Joi.boolean().required().default(false),
   isLactoseFree: Joi.boolean().required().default(false),
   isFav: Joi.boolean().required().default(false),
+  postedBy: Joi.string().optional(),
 });

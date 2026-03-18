@@ -6,7 +6,7 @@
 export const up = async (db, client) => {
   // TODO write your migration here.
   // See https://github.com/seppevs/migrate-mongo/#creating-a-new-migration-script
-  await db.collection("category").insertMany([
+  await db.collection("categories").insertMany([
     { slug: "c1", title: "Italian", color: "#f5428d" },
     { slug: "c2", title: "Quick & Easy", color: "#f54242" },
     { slug: "c3", title: "Hamburgers", color: "#f5a442" },
@@ -26,5 +26,5 @@ export const up = async (db, client) => {
  * @returns {Promise<void>}
  */
 export const down = async (db, client) => {
-await db.collection("category").deleteMany({});
+  await db.collection("categories").deleteMany({});
 };

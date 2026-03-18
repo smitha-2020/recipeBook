@@ -4,9 +4,9 @@ import mongoose from "mongoose";
 
 import { IConfigDTO } from "./dto/configDTO.js";
 
-import genreRoute from "./routes/genre.js";
 import authRoute from "./routes/auth.js";
 import recipeRoute from "./routes/recipes.js";
+import userRoute from "./routes/users.js";
 import { StatusCodes } from "http-status-codes";
 import errorMiddleWare from "./middleware/error.js";
 
@@ -33,11 +33,11 @@ mongoose
 
 app.use(express.json());
 app.use(express.urlencoded());
-app.use("/api/genre", genreRoute);
+//app.use("/api/genre", genreRoute);
 app.use("/api/recipe", recipeRoute);
 //app.use("/api/movies", movieRoute);
 //app.use("/api/customers", customerRoute);
-//app.use("/api/register", userRoute);
+app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
 app.use(errorMiddleWare);
 

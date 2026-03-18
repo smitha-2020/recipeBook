@@ -10,7 +10,12 @@ import authenticatedUser from "../middleware/authenticatedUser.js";
 
 const router = express.Router();
 
-router.post("/", validation(UserJoiSchema), authenticatedUser(), registerUser);
+router.post(
+  "/register",
+  validation(UserJoiSchema),
+  authenticatedUser(),
+  registerUser,
+);
 router.get("/me", authenticatedUser(), getCurrentUser);
 router.get("/logout", authenticatedUser(), loggingOut);
 
