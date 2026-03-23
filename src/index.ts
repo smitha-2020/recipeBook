@@ -7,6 +7,7 @@ import { IConfigDTO } from "./dto/configDTO.js";
 import authRoute from "./routes/auth.js";
 import recipeRoute from "./routes/recipes.js";
 import userRoute from "./routes/users.js";
+import categoryRoute from "./routes/category.js";
 import { StatusCodes } from "http-status-codes";
 import errorMiddleWare from "./middleware/error.js";
 
@@ -31,10 +32,13 @@ mongoose
     console.error("Failed to connect to MongoDB", err.message);
   });
 
+mongoose.set("returnDocument", "after");
+
 app.use(express.json());
 app.use(express.urlencoded());
 //app.use("/api/genre", genreRoute);
 app.use("/api/recipe", recipeRoute);
+app.use("/api/category", categoryRoute);
 //app.use("/api/movies", movieRoute);
 //app.use("/api/customers", customerRoute);
 app.use("/api/user", userRoute);

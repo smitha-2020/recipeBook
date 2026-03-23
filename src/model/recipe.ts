@@ -1,5 +1,11 @@
 import mongoose, { Document } from "mongoose";
 import Joi from "joi";
+import { reviewSchema } from "./review.js";
+import {
+  CategoryCreateJoi,
+  categorySchema,
+} from "./category.js";
+import { ICategorySchema } from "./categorySnapshot.js";
 const { Schema } = mongoose;
 
 export enum IAffordability {
@@ -16,6 +22,7 @@ export enum IComplexity {
 
 export interface IRecipeSchema extends Document {
   category: mongoose.Schema.Types.ObjectId[];
+  categorySnapshot: ICategorySchema[];
   title: string;
   slug: string;
   affordability: IAffordability;
@@ -29,6 +36,7 @@ export interface IRecipeSchema extends Document {
   isVegetarian: boolean;
   isLactoseFree: boolean;
   isFav: boolean;
+  reviewedBy: string;
   postedBy: mongoose.Schema.Types.ObjectId;
 }
 
@@ -42,6 +50,10 @@ export const recipeSchema = new Schema<IRecipeSchema>(
         validator: (ids: mongoose.Schema.Types.ObjectId[]) => ids.length > 0,
         message: "At least one category must be provided",
       },
+    },
+    categorySnapshot: {
+      type: [categorySchema],
+      required: true,
     },
     title: {
       type: String,
@@ -96,6 +108,8 @@ export const recipeSchema = new Schema<IRecipeSchema>(
     isLactoseFree: { type: Boolean, default: false },
     isFav: { type: Boolean, default: false },
 
+    reviewedBy: [reviewSchema],
+
     postedBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,
@@ -105,10 +119,15 @@ export const recipeSchema = new Schema<IRecipeSchema>(
   { timestamps: true },
 );
 
+recipeSchema.post("save", function (doc) {
+  console.error("this fired after a document was saved", doc._id);
+});
+
 export const Recipe = mongoose.model<IRecipeSchema>("Recipe", recipeSchema);
 
 export const RecipeJoiSchema = Joi.object({
   category: Joi.array().items(Joi.string()).required().min(1),
+  categorySnapshot: Joi.array().items(CategoryCreateJoi).required().min(1),
   title: Joi.string().min(5).max(50),
   slug: Joi.string().min(15).max(25),
   affordability: Joi.string().valid(Object.values(IAffordability).join(",")),
@@ -122,5 +141,6 @@ export const RecipeJoiSchema = Joi.object({
   isVegetarian: Joi.boolean().required().default(false),
   isLactoseFree: Joi.boolean().required().default(false),
   isFav: Joi.boolean().required().default(false),
+  reviewedBy: Joi.string().optional(),
   postedBy: Joi.string().optional(),
 });

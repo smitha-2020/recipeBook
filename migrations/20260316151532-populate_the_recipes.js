@@ -22,6 +22,10 @@ export const up = async (db, client) => {
     {
       id: "m1",
       category: [categoryBySlug["c1"], categoryBySlug["c2"]],
+      categorySnapshot: [
+        { slug: "c1", title: "Italian", color: "#f5428d" },
+        { slug: "c2", title: "Quick & Easy", color: "#f54242" },
+      ],
       title: "Spaghetti with Tomato Sauce",
       slug: "spaghetti-with-tomato-sauce",
       affordability: "affordable",
@@ -56,6 +60,9 @@ export const up = async (db, client) => {
     {
       id: "m2",
       category: [categoryBySlug["c2"]],
+      categorySnapshot: [
+        { slug: "c2", title: "Quick & Easy", color: "#f54242" },
+      ],
       title: "Toast Hawaii",
       slug: "toast-hawaii",
       affordability: "affordable",
@@ -85,6 +92,7 @@ export const up = async (db, client) => {
     {
       id: "m3",
       category: [categoryBySlug["c3"]],
+      categorySnapshot: [{ slug: "c3", title: "Hamburgers", color: "#f5a442" }],
       title: "Classic Hamburger",
       slug: "classic-hamburger",
       affordability: "pricey",
@@ -117,6 +125,7 @@ export const up = async (db, client) => {
     {
       id: "m4",
       category: [categoryBySlug["c4"]],
+      categorySnapshot: [{ slug: "c4", title: "German", color: "#f54242" }],
       title: "Wiener Schnitzel",
       slug: "wiener-schnitzel",
       affordability: "luxurious",
@@ -157,6 +166,11 @@ export const up = async (db, client) => {
         categoryBySlug["c5"],
         categoryBySlug["c10"],
       ],
+      categorySnapshot: [
+        { slug: "c2", title: "Quick & Easy", color: "#f54242" },
+        { slug: "c5", title: "Light & Lovely", color: "#368dff" },
+        { slug: "c10", title: "Summer", color: "#47fced" },
+      ],
       title: "Salad with Smoked Salmon",
       slug: "salad-with-smoked-salmon",
       affordability: "luxurious",
@@ -192,6 +206,10 @@ export const up = async (db, client) => {
     {
       id: "m6",
       category: [categoryBySlug["c6"], categoryBySlug["c10"]],
+      categorySnapshot: [
+        { slug: "c6", title: "Exotic", color: "#41d95d" },
+        { slug: "c10", title: "Summer", color: "#47fced" },
+      ],
       title: "Delicious Orange Mousse",
       slug: "delicious-orange-mousse",
       affordability: "affordable",
@@ -228,6 +246,7 @@ export const up = async (db, client) => {
     {
       id: "m7",
       category: [categoryBySlug["c7"]],
+      categorySnapshot: [{ slug: "c7", title: "Breakfast", color: "#9eecff" }],
       title: "Pancakes",
       slug: "pancakes",
       affordability: "affordable",
@@ -260,6 +279,7 @@ export const up = async (db, client) => {
     {
       id: "m8",
       category: [categoryBySlug["c8"]],
+      categorySnapshot: [{ slug: "c8", title: "Asian", color: "#b9ffb0" }],
       title: "Creamy Indian Chicken Curry",
       slug: "creamy-indian-chicken-curry",
       affordability: "pricey",
@@ -294,6 +314,7 @@ export const up = async (db, client) => {
     {
       id: "m9",
       category: [categoryBySlug["c9"]],
+      categorySnapshot: [{ slug: "c9", title: "French", color: "#ffc7ff" }],
       title: "Chocolate Souffle",
       slug: "chocolate-souffle",
       affordability: "affordable",
@@ -347,6 +368,11 @@ export const up = async (db, client) => {
         categoryBySlug["c2"],
         categoryBySlug["c5"],
         categoryBySlug["c10"],
+      ],
+      categorySnapshot: [
+        { slug: "c2", title: "Quick & Easy", color: "#f54242" },
+        { slug: "c5", title: "Light & Lovely", color: "#368dff" },
+        { slug: "c10", title: "Summer", color: "#47fced" },
       ],
       title: "Asparagus Salad with Cherry Tomatoes",
       slug: "asparagus-salad-with-cherry-tomatoes",

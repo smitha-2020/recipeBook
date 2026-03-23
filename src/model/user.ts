@@ -16,7 +16,7 @@ export interface IUserMethods {
   jwtCreation(): string;
 }
 
-const userSchema = new Schema<IUser, Model<IUser>, IUserMethods>({
+export const userSchema = new Schema<IUser, Model<IUser>, IUserMethods>({
   name: { type: String, required: true, minLen: 3, maxLen: 50 },
   email: {
     type: String,
