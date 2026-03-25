@@ -9,7 +9,7 @@ export const categorySchema = new Schema<ICategorySchema>({
     required: false,
     unique: true,
     minLength: 1,
-    default: "cDefault",
+    default: "Default",
   },
   title: {
     type: String,

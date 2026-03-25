@@ -1,10 +1,7 @@
 import mongoose, { Document } from "mongoose";
 import Joi from "joi";
 import { reviewSchema } from "./review.js";
-import {
-  CategoryCreateJoi,
-  categorySchema,
-} from "./category.js";
+import { CategoryCreateJoi, categorySchema } from "./category.js";
 import { ICategorySchema } from "./categorySnapshot.js";
 const { Schema } = mongoose;
 

@@ -40,7 +40,8 @@ export const getCurrentUser = async (req: IDecodedTokenReq, res: Response) => {
   const loggedInUserDetails = await User.findById(req.user.id).select(
     "-password",
   );
-  return res.status(StatusCodes.OK).send(loggedInUserDetails);
+  if (!loggedInUserDetails)
+    return res.status(StatusCodes.NOT_FOUND).send("could not find the user");
 };
 
 export const loggingOut = async (req: IDecodedTokenReq, res: Response) => {

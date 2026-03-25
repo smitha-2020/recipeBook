@@ -8,6 +8,8 @@ services:
       - db
     environment:
       DB_URL: mongodb://db/recipeBook
+      NODE_ENV: production
+      DB_NAME: recipeBook
       # Detect code changes when ./ is mounted (required on Docker Desktop Mac/Windows)
       CHOKIDAR_USEPOLLING: "true"
     volumes:

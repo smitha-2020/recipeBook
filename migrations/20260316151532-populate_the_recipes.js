@@ -405,6 +405,11 @@ export const up = async (db, client) => {
       postedBy: createdById,
     },
   ]);
+
+  if (process.env.NODE_ENV === "production") {
+    await db.collection("recipes").createIndex({ category: 1 });
+    console.log("Index created for recipes collection");
+  }
 };
 
 /**

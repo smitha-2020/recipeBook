@@ -12,9 +12,9 @@ export const deleteCategoryAndSyncRecipe = async (
   const category = await Category.findById(id);
   if (!category)
     return res.status(StatusCodes.NOT_FOUND).send("Category with ID not found");
-  //check all the affecred recipes
 
-  const recipes = await Recipe.find({
+  //check all the affected recipes
+  const affected = await Recipe.find({
     category: category._id,
   } as any);
 
@@ -24,21 +24,19 @@ export const deleteCategoryAndSyncRecipe = async (
       .status(StatusCodes.NOT_FOUND)
       .send("Category with ID could not be deleted");
 
-  //sync the recipes to reflect the deltetion
-
+  //update the recipe category[] to reflect deleted category
   await Recipe.updateMany(
-    { _id: { $in: recipes.map((r) => r._id) } },
+    { _id: { $in: affected.map((r) => r._id) } },
     { $pull: { category: category._id } },
   );
 
-  for (const recipe of recipes) {
-    // Reload recipe after $pull
+  //update the recipes to update the 
+  for (const recipe of affected) {
     const currentRecipe = await Recipe.findById(recipe._id).select(
       "_id category",
     );
 
     if (!currentRecipe) continue;
-    // Optional policy: if no categories left, delete recipe
     if (!currentRecipe.category.length) {
       await Recipe.deleteOne({ _id: currentRecipe._id });
       continue;
@@ -60,5 +58,7 @@ export const deleteCategoryAndSyncRecipe = async (
     );
   }
 
-  return res.send("Deleted");
+  const recipesWithUpdatedSnapshot = await Recipe.find();
+
+  return res.status(StatusCodes.OK).send(recipesWithUpdatedSnapshot);
 };

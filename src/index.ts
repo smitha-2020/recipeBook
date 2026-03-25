@@ -31,8 +31,9 @@ mongoose
   .catch((err) => {
     console.error("Failed to connect to MongoDB", err.message);
   });
-
+console.log("NODE_ENV", process.env.NODE_ENV);
 mongoose.set("returnDocument", "after");
+mongoose.set("autoIndex", process.env.NODE_ENV === "development");
 
 app.use(express.json());
 app.use(express.urlencoded());

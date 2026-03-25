@@ -18,6 +18,15 @@ export const up = async (db, client) => {
     { slug: "c9", title: "French", color: "#ffc7ff" },
     { slug: "c10", title: "Summer", color: "#47fced" },
   ]);
+
+  console.log("Index creation", process.env.NODE_ENV);
+  if (process.env.NODE_ENV === "production") {
+    await db
+      .collection("categories")
+      .createIndex({ slug: 1 }, { unique: true });
+    await db.collection("categories").createIndex({ title: 1 });
+    console.log("Index created for catgories collection");
+  }
 };
 
 /**
