@@ -37,11 +37,8 @@ mongoose.set("autoIndex", process.env.NODE_ENV === "development");
 
 app.use(express.json());
 app.use(express.urlencoded());
-//app.use("/api/genre", genreRoute);
 app.use("/api/recipe", recipeRoute);
 app.use("/api/category", categoryRoute);
-//app.use("/api/movies", movieRoute);
-//app.use("/api/customers", customerRoute);
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
 app.use(errorMiddleWare);
