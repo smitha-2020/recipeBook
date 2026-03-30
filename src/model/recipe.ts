@@ -39,6 +39,29 @@ export interface IRecipeSchema extends Document {
   updatedAt: number;
 }
 
+
+export interface IRecipeUpdateSchema {
+  category?: mongoose.Schema.Types.ObjectId[];
+  categorySnapshot?: ICategorySchema[];
+  title?: string;
+  slug?: string;
+  affordability?: IAffordability;
+  complexity?: IComplexity;
+  imageUrl?: string;
+  duration?: number;
+  ingredients?: string[];
+  steps?: string[];
+  isGlutenFree?: boolean;
+  isVegan?: boolean;
+  isVegetarian?: boolean;
+  isLactoseFree?: boolean;
+  isFav?: boolean;
+  reviewedBy?: string;
+  postedBy?: mongoose.Schema.Types.ObjectId;
+  createdAt: number;
+  updatedAt: number;
+}
+
 export const recipeSchema = new Schema<IRecipeSchema>(
   {
     category: {
