@@ -19,7 +19,7 @@ export enum IComplexity {
 
 export interface IRecipeSchema extends Document {
   category: mongoose.Schema.Types.ObjectId[];
-  categorySnapshot: ICategorySchema[];
+  categorySnapshot?: ICategorySchema[];
   title: string;
   slug: string;
   affordability: IAffordability;
@@ -35,6 +35,8 @@ export interface IRecipeSchema extends Document {
   isFav: boolean;
   reviewedBy: string;
   postedBy: mongoose.Schema.Types.ObjectId;
+  createdAt: number;
+  updatedAt: number;
 }
 
 export const recipeSchema = new Schema<IRecipeSchema>(
@@ -112,8 +114,10 @@ export const recipeSchema = new Schema<IRecipeSchema>(
       required: false,
       ref: "User",
     },
+    createdAt: Number,
+    updatedAt: Number,
   },
-  { timestamps: true },
+  { timestamps: { currentTime: () => Math.floor(Date.now() / 1000) } },
 );
 
 recipeSchema.post("save", function (doc) {

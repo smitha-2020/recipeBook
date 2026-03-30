@@ -3,23 +3,28 @@ import mongoose from "mongoose";
 import { ICategorySchema } from "./categorySnapshot.js";
 const { Schema } = mongoose;
 
-export const categorySchema = new Schema<ICategorySchema>({
-  slug: {
-    type: String,
-    required: false,
-    unique: true,
-    minLength: 1,
-    default: "Default",
+export const categorySchema = new Schema<ICategorySchema>(
+  {
+    slug: {
+      type: String,
+      required: false,
+      unique: true,
+      minLength: 1,
+      default: "Default",
+    },
+    title: {
+      type: String,
+      required: false,
+      minLength: 5,
+      maxLength: 25,
+      default: "Default",
+    },
+    color: { type: String, required: false, minLength: 6, default: "#ffffff" },
+    createdAt: Number,
+    updatedAt: Number,
   },
-  title: {
-    type: String,
-    required: false,
-    minLength: 5,
-    maxLength: 25,
-    default: "Default",
-  },
-  color: { type: String, required: false, minLength: 6, default: "#ffffff" },
-});
+  { timestamps: { currentTime: () => Math.floor(Date.now() / 1000) } },
+);
 
 categorySchema.post("findOneAndUpdate", async function (doc) {
   if (!doc) return;
@@ -32,11 +37,11 @@ categorySchema.post("findOneAndUpdate", async function (doc) {
     { category: doc._id },
     {
       $set: {
-        "categorySnapshot.$[elem]": {
-          slug: doc.slug,
-          title: doc.title,
-          color: doc.color,
-        },
+        "categorySnapshot.$[elem].slug": doc.slug,
+        "categorySnapshot.$[elem].title": doc.title,
+        "categorySnapshot.$[elem].color": doc.color,
+        "categorySnapshot.$[elem].createdAt": doc.createdAt,
+        "categorySnapshot.$[elem].updatedAt": Math.floor(Date.now() / 1000),
       },
     },
     {
